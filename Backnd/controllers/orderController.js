@@ -109,10 +109,10 @@ const verifyStripe = async (req,res) => {
         if (success === "true") {
             await orderModel.findByIdAndUpdate(orderId, {payment:true});
             await userModel.findByIdAndUpdate(userId, {cartData: {}})
-            res.json({success: true});
+            res.json({success: true, message: "Payment verified successfully"});
         } else {
             await orderModel.findByIdAndDelete(orderId)
-            res.json({success:false})
+            res.json({success:false, message: "Payment verification failed"})
         }
         
     } catch (error) {

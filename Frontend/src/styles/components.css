@@ -1,0 +1,159 @@
+/* Design System Base Styles */
+
+/* Button Component Styles */
+.btn-primary {
+  @apply bg-primary-600 hover:bg-primary-700 text-white font-medium px-6 py-3 rounded-xl 
+         transition-all duration-300 ease-out transform hover:scale-105 
+         shadow-soft hover:shadow-medium active:scale-95;
+}
+
+.btn-secondary {
+  @apply bg-transparent border-2 border-primary-600 text-primary-600 hover:bg-primary-600 
+         hover:text-white font-medium px-6 py-3 rounded-xl transition-all duration-300 
+         ease-out transform hover:scale-105 active:scale-95;
+}
+
+.btn-outline {
+  @apply bg-transparent border border-neutral-300 text-neutral-700 hover:border-neutral-400 
+         hover:bg-neutral-50 font-medium px-6 py-3 rounded-xl transition-all duration-200 
+         ease-out;
+}
+
+.btn-ghost {
+  @apply bg-transparent text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 
+         font-medium px-4 py-2 rounded-lg transition-all duration-200 ease-out;
+}
+
+/* Input Component Styles */
+.input-primary {
+  @apply w-full px-4 py-3 border border-neutral-300 rounded-xl text-neutral-900 
+         placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500 
+         focus:border-transparent transition-all duration-200 ease-out;
+}
+
+.input-error {
+  @apply w-full px-4 py-3 border border-semantic-error rounded-xl text-neutral-900 
+         placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-semantic-error 
+         focus:border-transparent transition-all duration-200 ease-out;
+}
+
+/* Card Component Styles */
+.card-default {
+  @apply bg-white rounded-2xl shadow-soft hover:shadow-medium transition-shadow 
+         duration-300 ease-out;
+}
+
+.card-elevated {
+  @apply bg-white rounded-2xl shadow-medium hover:shadow-strong transition-shadow 
+         duration-300 ease-out;
+}
+
+  .card-product {
+    @apply bg-white rounded-2xl shadow-soft hover:shadow-medium transition-all
+           duration-300 ease-out cursor-pointer overflow-hidden;
+  }/* Typography Utilities */
+.text-display {
+  @apply font-display text-4xl md:text-5xl lg:text-6xl font-normal leading-tight 
+         text-neutral-900;
+}
+
+.text-heading-1 {
+  @apply font-display text-3xl md:text-4xl font-normal leading-tight text-neutral-900;
+}
+
+.text-heading-2 {
+  @apply font-display text-2xl md:text-3xl font-normal leading-tight text-neutral-900;
+}
+
+.text-heading-3 {
+  @apply font-sans text-xl md:text-2xl font-semibold leading-tight text-neutral-900;
+}
+
+.text-body-large {
+  @apply font-sans text-lg leading-relaxed text-neutral-700;
+}
+
+.text-body {
+  @apply font-sans text-base leading-relaxed text-neutral-700;
+}
+
+.text-body-small {
+  @apply font-sans text-sm leading-relaxed text-neutral-600;
+}
+
+.text-caption {
+  @apply font-sans text-xs leading-normal text-neutral-500 uppercase tracking-wider;
+}
+
+/* Layout Utilities */
+.container-padding {
+  @apply px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16;
+}
+
+.container-narrow {
+  @apply max-w-4xl mx-auto container-padding;
+}
+
+.container-wide {
+  @apply max-w-7xl mx-auto container-padding;
+}
+
+.section-spacing {
+  @apply py-16 md:py-20 lg:py-24;
+}
+
+.section-spacing-small {
+  @apply py-8 md:py-12 lg:py-16;
+}
+
+/* Animation Utilities */
+.animate-on-scroll {
+  @apply opacity-0 translate-y-4 transition-all duration-700 ease-out;
+}
+
+.animate-on-scroll.in-view {
+  @apply opacity-100 translate-y-0;
+}
+
+.hover-lift {
+  @apply transition-transform duration-300 ease-out hover:-translate-y-1;
+}
+
+.hover-scale {
+  @apply transition-transform duration-300 ease-out hover:scale-105;
+}
+
+/* Loading States */
+.skeleton {
+  @apply animate-pulse bg-neutral-200 rounded;
+}
+
+.skeleton-text {
+  @apply skeleton h-4 w-full;
+}
+
+.skeleton-heading {
+  @apply skeleton h-6 w-3/4;
+}
+
+.skeleton-circle {
+  @apply skeleton rounded-full;
+}
+
+/* Focus States for Accessibility */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+}
+
+/* Image Utilities */
+.img-cover {
+  @apply object-cover w-full h-full;
+}
+
+.img-contain {
+  @apply object-contain w-full h-full;
+}
+
+.img-product {
+  @apply img-cover transition-transform duration-500 ease-out group-hover:scale-110;
+}

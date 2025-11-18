@@ -1,7 +1,172 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-neutral-50 text-neutral-900 font-sans antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  /* Container utilities */
+  .container-admin {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Button components */
+  .btn-admin-primary {
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .btn-admin-secondary {
+    @apply bg-white hover:bg-neutral-50 text-neutral-700 font-medium py-2.5 px-5 rounded-lg border border-neutral-300 transition-all duration-200 hover:border-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+  
+  .btn-admin-outline {
+    @apply border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+  
+  .btn-admin-ghost {
+    @apply text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 font-medium py-2 px-3 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+  
+  .btn-admin-danger {
+    @apply bg-semantic-error hover:bg-red-700 text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2;
+  }
+  
+  /* Input components */
+  .input-admin {
+    @apply w-full px-4 py-2.5 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 placeholder-neutral-400;
+  }
+  
+  .input-admin-error {
+    @apply input-admin border-semantic-error focus:ring-red-500;
+  }
+  
+  .textarea-admin {
+    @apply input-admin resize-none min-h-[100px];
+  }
+  
+  /* Card components */
+  .card-admin {
+    @apply bg-white rounded-xl shadow-soft border border-neutral-200 p-6 transition-all duration-300 hover:shadow-medium;
+  }
+  
+  .card-admin-header {
+    @apply flex items-center justify-between mb-4 pb-4 border-b border-neutral-200;
+  }
+  
+  .card-admin-compact {
+    @apply bg-white rounded-lg shadow-soft border border-neutral-200 p-4;
+  }
+  
+  /* Layout components */
+  .sidebar-admin {
+    @apply fixed left-0 top-0 h-full w-64 bg-white border-r border-neutral-200 shadow-soft z-50 transform transition-transform duration-300;
+  }
+  
+  .navbar-admin {
+    @apply fixed top-0 right-0 left-64 h-16 bg-white border-b border-neutral-200 shadow-sm z-40 flex items-center justify-between px-6;
+  }
+  
+  .content-admin {
+    @apply ml-64 mt-16 p-8 min-h-screen bg-neutral-50;
+  }
+  
+  /* Table components */
+  .table-admin {
+    @apply w-full bg-white rounded-xl shadow-soft overflow-hidden;
+  }
+  
+  .table-admin-header {
+    @apply bg-neutral-50 border-b border-neutral-200;
+  }
+  
+  .table-admin-row {
+    @apply border-b border-neutral-200 hover:bg-neutral-50 transition-colors duration-150;
+  }
+  
+  .table-admin-cell {
+    @apply px-6 py-4 text-sm text-neutral-900;
+  }
+  
+  .table-admin-header-cell {
+    @apply px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider;
+  }
+  
+  /* Badge components */
+  .badge-admin {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .badge-admin-success {
+    @apply badge-admin bg-green-100 text-green-800;
+  }
+  
+  .badge-admin-warning {
+    @apply badge-admin bg-yellow-100 text-yellow-800;
+  }
+  
+  .badge-admin-error {
+    @apply badge-admin bg-red-100 text-red-800;
+  }
+  
+  .badge-admin-info {
+    @apply badge-admin bg-blue-100 text-blue-800;
+  }
+  
+  .badge-admin-neutral {
+    @apply badge-admin bg-neutral-100 text-neutral-800;
+  }
+  
+  /* Stats components */
+  .stat-card-admin {
+    @apply card-admin flex items-center space-x-4;
+  }
+  
+  .stat-icon-admin {
+    @apply w-12 h-12 rounded-lg flex items-center justify-center text-white;
+  }
+  
+  /* Form components */
+  .form-group-admin {
+    @apply space-y-2;
+  }
+  
+  .form-label-admin {
+    @apply block text-sm font-medium text-neutral-700;
+  }
+  
+  .form-error-admin {
+    @apply text-sm text-semantic-error mt-1;
+  }
+  
+  .form-help-admin {
+    @apply text-sm text-neutral-500 mt-1;
+  }
+  
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .sidebar-admin {
+      @apply -translate-x-full;
+    }
+    
+    .navbar-admin {
+      @apply left-0;
+    }
+    
+    .content-admin {
+      @apply ml-0;
+    }
+  }
+}
 
 *{
     font-family: Outfit;
