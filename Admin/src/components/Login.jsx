@@ -70,7 +70,7 @@ const Login = ({ setToken }) => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-neutral-900 font-display">Dreams Admin</h1>
+          <h1 className="text-2xl font-bold text-neutral-900 font-display">C2Store Admin</h1>
           <p className="text-neutral-600 mt-2">Sign in to manage your store</p>
         </div>
 
@@ -81,7 +81,7 @@ const Login = ({ setToken }) => {
               <Input
                 type="email"
                 label="Email Address"
-                placeholder="admin@clothstore.com"
+                placeholder="admin@c2store.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 error={errors.email}

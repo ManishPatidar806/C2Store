@@ -3,18 +3,17 @@ import { ShopContext } from '../context/ShopContext'
 import { toast } from 'react-toastify'
 import Title from '../components/Title'
 import { Card, Button, Input } from '../components/ui'
-import axios from 'axios'
 
 const Profile = () => {
-  const { token, backendUrl, navigate } = useContext(ShopContext)
-  const [userInfo, setUserInfo] = useState({
+  const { token, navigate, user, setUser, getUserProfile, updateUserProfile } = useContext(ShopContext)
+  const [isEditing, setIsEditing] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [updating, setUpdating] = useState(false)
+  const [userProfile, setUserProfile] = useState({
     name: '',
     email: '',
     joinDate: ''
   })
-  const [isEditing, setIsEditing] = useState(false)
-  const [loading, setLoading] = useState(true)
-  const [updating, setUpdating] = useState(false)
   const [editForm, setEditForm] = useState({
     name: '',
     currentPassword: '',
@@ -22,47 +21,96 @@ const Profile = () => {
     confirmPassword: ''
   })
 
-  // Get user info from token or API
-  const fetchUserInfo = async () => {
-    try {
-      if (!token) {
-        navigate('/login')
-        return
-      }
-
-      // Since there's no user profile API, we'll decode the token or use localStorage
-      const tokenData = JSON.parse(atob(token.split('.')[1]))
-      
-      // For now, we'll use mock data based on token
-      setUserInfo({
-        name: localStorage.getItem('userName') || 'User',
-        email: localStorage.getItem('userEmail') || 'user@example.com',
-        joinDate: new Date(tokenData.iat * 1000).toLocaleDateString() || 'Recently'
-      })
-      
-      setEditForm({
-        name: localStorage.getItem('userName') || 'User',
-        currentPassword: '',
-        newPassword: '',
-        confirmPassword: ''
-      })
-      
-      setLoading(false)
-    } catch (error) {
-      console.error('Error fetching user info:', error)
-      setLoading(false)
-    }
-  }
-
+  // Initialize user data from localStorage or context
   useEffect(() => {
-    fetchUserInfo()
-  }, [token])
+    if (!token) {
+      navigate('/login')
+      return
+    }
+
+    // Try to get user data from various sources
+    const initializeUserData = async () => {
+      setLoading(true)
+      
+      let userData = null;
+      
+      // First try: use context user
+      if (user) {
+        userData = user;
+      } else {
+        // Second try: get from localStorage
+        const storedData = localStorage.getItem('userData');
+        if (storedData) {
+          try {
+            userData = JSON.parse(storedData);
+            setUser(userData); // Update context
+          } catch (error) {
+            console.log('Error parsing stored user data:', error);
+          }
+        }
+        
+        // Third try: use getUserProfile from context
+        if (!userData && getUserProfile) {
+          try {
+            userData = await getUserProfile();
+          } catch (error) {
+            console.log('Error fetching profile:', error);
+          }
+        }
+        
+        // Fourth try: create from localStorage items
+        if (!userData) {
+          userData = {
+            name: localStorage.getItem('userName') || 'Guest User',
+            email: localStorage.getItem('userEmail') || 'user@example.com',
+            joinDate: new Date().toISOString()
+          };
+          setUser(userData); // Update context
+        }
+      }
+      
+      if (userData) {
+        setUserProfile({
+          name: userData.name || 'Guest User',
+          email: userData.email || 'user@example.com',
+          joinDate: userData.joinDate ? new Date(userData.joinDate).toLocaleDateString() : new Date().toLocaleDateString()
+        });
+        
+        setEditForm({
+          name: userData.name || 'Guest User',
+          currentPassword: '',
+          newPassword: '',
+          confirmPassword: ''
+        });
+      }
+      
+      setLoading(false);
+    }
+
+    initializeUserData();
+  }, [token, navigate, user, getUserProfile, setUser])
+
+  // Update form when context user changes
+  useEffect(() => {
+    if (user) {
+      setUserProfile({
+        name: user.name || 'Guest User',
+        email: user.email || 'user@example.com',
+        joinDate: user.joinDate ? new Date(user.joinDate).toLocaleDateString() : new Date().toLocaleDateString()
+      });
+      
+      setEditForm(prev => ({
+        ...prev,
+        name: user.name || 'Guest User'
+      }));
+    }
+  }, [user])
 
   const handleEditToggle = () => {
     setIsEditing(!isEditing)
     if (!isEditing) {
       setEditForm({
-        name: userInfo.name,
+        name: userProfile.name,
         currentPassword: '',
         newPassword: '',
         confirmPassword: ''
@@ -95,22 +143,64 @@ const Profile = () => {
         return
       }
 
-      if (editForm.newPassword && editForm.newPassword.length < 6) {
-        toast.error('New password must be at least 6 characters')
+      if (editForm.newPassword && editForm.newPassword.length < 8) {
+        toast.error('New password must be at least 8 characters')
         setUpdating(false)
         return
       }
 
-      // Since there's no update profile API, we'll store in localStorage
-      localStorage.setItem('userName', editForm.name)
-      
-      setUserInfo({
-        ...userInfo,
-        name: editForm.name
-      })
+      // Prepare update data
+      const updateData = {
+        name: editForm.name.trim(),
+      }
 
-      toast.success('Profile updated successfully')
-      setIsEditing(false)
+      if (editForm.newPassword) {
+        updateData.currentPassword = editForm.currentPassword
+        updateData.newPassword = editForm.newPassword
+      }
+
+      let success = false;
+
+      // Try to use API first
+      if (updateUserProfile) {
+        try {
+          const result = await updateUserProfile(updateData)
+          if (result && result.success) {
+            success = true;
+          }
+        } catch (error) {
+          console.log('API update failed, using local update:', error)
+        }
+      }
+
+      // Fallback to local update
+      if (!success) {
+        const updatedProfile = {
+          ...userProfile,
+          name: editForm.name.trim()
+        }
+        
+        setUserProfile(updatedProfile)
+        
+        // Update localStorage
+        localStorage.setItem('userName', editForm.name.trim())
+        const userData = { ...user, name: editForm.name.trim() }
+        localStorage.setItem('userData', JSON.stringify(userData))
+        setUser(userData) // Update context
+        
+        toast.success('Profile updated successfully!')
+        success = true;
+      }
+      
+      if (success) {
+        setIsEditing(false)
+        setEditForm({
+          name: editForm.name.trim(),
+          currentPassword: '',
+          newPassword: '',
+          confirmPassword: ''
+        })
+      }
       
     } catch (error) {
       console.error('Error updating profile:', error)
@@ -155,9 +245,9 @@ const Profile = () => {
                 </svg>
               </div>
               <div>
-                <h1 className='text-heading-2 font-display font-semibold mb-1'>{userInfo.name}</h1>
-                <p className='text-white/90 text-body-large'>{userInfo.email}</p>
-                <p className='text-white/70 text-body-small mt-1'>Member since {userInfo.joinDate}</p>
+                <h1 className='text-heading-2 font-display font-semibold mb-1'>{userProfile.name}</h1>
+                <p className='text-white/90 text-body-large'>{userProfile.email}</p>
+                <p className='text-white/70 text-body-small mt-1'>Member since {userProfile.joinDate}</p>
               </div>
             </div>
           </div>
@@ -185,15 +275,15 @@ const Profile = () => {
                   <div className='space-y-6'>
                     <div>
                       <label className='block text-label text-neutral-500 mb-2'>Full Name</label>
-                      <p className='text-body-large text-neutral-900'>{userInfo.name}</p>
+                      <p className='text-body-large text-neutral-900'>{userProfile.name}</p>
                     </div>
                     <div>
                       <label className='block text-label text-neutral-500 mb-2'>Email Address</label>
-                      <p className='text-body-large text-neutral-900'>{userInfo.email}</p>
+                      <p className='text-body-large text-neutral-900'>{userProfile.email}</p>
                     </div>
                     <div>
                       <label className='block text-label text-neutral-500 mb-2'>Member Since</label>
-                      <p className='text-body-large text-neutral-900'>{userInfo.joinDate}</p>
+                      <p className='text-body-large text-neutral-900'>{userProfile.joinDate}</p>
                     </div>
                   </div>
                 ) : (
@@ -218,7 +308,7 @@ const Profile = () => {
                       </label>
                       <Input
                         type='email'
-                        value={userInfo.email}
+                        value={userProfile.email}
                         disabled
                         className='bg-neutral-50'
                       />

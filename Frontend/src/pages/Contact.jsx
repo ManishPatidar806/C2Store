@@ -3,6 +3,7 @@ import Title from '../components/Title'
 import { assets } from '../assets/assets'
 import NewsletterBox from '../components/NewsletterBox'
 import { Card, Button, Input } from '../components/ui'
+import { toast } from 'react-toastify'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -25,12 +26,43 @@ const Contact = () => {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    alert('Thank you for your message! We\'ll get back to you soon.')
-    setFormData({ name: '', email: '', subject: '', message: '' })
-    setIsSubmitting(false)
+    try {
+      // Basic form validation
+      if (!formData.name.trim() || !formData.email.trim() || !formData.subject.trim() || !formData.message.trim()) {
+        toast.error('Please fill in all required fields')
+        setIsSubmitting(false)
+        return
+      }
+
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(formData.email)) {
+        toast.error('Please enter a valid email address')
+        setIsSubmitting(false)
+        return
+      }
+
+      // Simulate form submission
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      toast.success('Thank you for your message! We\'ll get back to you soon.', {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      })
+      
+      // Reset form
+      setFormData({ name: '', email: '', subject: '', message: '' })
+      
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      toast.error('Failed to send message. Please try again later.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -69,8 +101,8 @@ const Contact = () => {
                   <div>
                     <h3 className="text-xl font-bold text-neutral-900 mb-2">Our Store</h3>
                     <p className="text-neutral-600">
-                      Near Bombay Plaza<br />
-                      Suite 350, Rajkot, Gujarat<br />
+                      Near Apna Sweets <br />
+                      Suite 350, Indore, Madhya Pradesh<br />
                       India
                     </p>
                   </div>
@@ -86,7 +118,7 @@ const Contact = () => {
                     <h3 className="text-xl font-bold text-neutral-900 mb-2">Contact Info</h3>
                     <p className="text-neutral-600">
                       Tel: (415) 555-0132<br />
-                      Email: DreamsClothing@gmail.com
+                      Email: C2Store@gmail.com
                     </p>
                   </div>
                 </div>

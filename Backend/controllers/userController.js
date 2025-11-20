@@ -25,7 +25,16 @@ const loginUser = async (req, res) => {
         if (isMatch) {
 
             const token = createToken(user._id)
-            res.json({ success: true, token })
+            res.json({ 
+                success: true, 
+                token,
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    joinDate: user._id.getTimestamp()
+                }
+            })
 
         }
         else {
@@ -72,11 +81,121 @@ const registerUser = async (req, res) => {
 
         const token = createToken(user._id)
 
-        res.json({ success: true, token })
+        res.json({ 
+            success: true, 
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                joinDate: user._id.getTimestamp()
+            }
+        })
 
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: error.message })
+    }
+}
+
+// Route for get user profile
+const getUserProfile = async (req, res) => {
+    try {
+        console.log('getUserProfile called with userId:', req.body.userId);
+        const { userId } = req.body;
+        
+        if (!userId) {
+            return res.json({ success: false, message: "User ID is required" });
+        }
+        
+        const user = await userModel.findById(userId).select('-password');
+        
+        if (!user) {
+            return res.json({ success: false, message: "User not found" });
+        }
+        
+        const userResponse = {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            joinDate: user._id.getTimestamp()
+        };
+        
+        console.log('Returning user data:', userResponse);
+        
+        res.json({ 
+            success: true, 
+            user: userResponse
+        });
+        
+    } catch (error) {
+        console.log('getUserProfile error:', error);
+        res.json({ success: false, message: error.message });
+    }
+}
+
+// Route for update user profile
+const updateUserProfile = async (req, res) => {
+    try {
+        console.log('updateUserProfile called with data:', req.body);
+        const { userId, name, currentPassword, newPassword } = req.body;
+        
+        if (!userId) {
+            return res.json({ success: false, message: "User ID is required" });
+        }
+        
+        const user = await userModel.findById(userId);
+        
+        if (!user) {
+            return res.json({ success: false, message: "User not found" });
+        }
+        
+        // Update name if provided
+        if (name && name.trim() !== '') {
+            user.name = name.trim();
+            console.log('Updating user name to:', name.trim());
+        }
+        
+        // Update password if provided
+        if (newPassword) {
+            if (!currentPassword) {
+                return res.json({ success: false, message: "Current password is required" });
+            }
+            
+            const isMatch = await bcrypt.compare(currentPassword, user.password);
+            if (!isMatch) {
+                return res.json({ success: false, message: "Current password is incorrect" });
+            }
+            
+            if (newPassword.length < 8) {
+                return res.json({ success: false, message: "New password must be at least 8 characters" });
+            }
+            
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(newPassword, salt);
+            user.password = hashedPassword;
+            console.log('Password updated successfully');
+        }
+        
+        await user.save();
+        console.log('User updated successfully');
+        
+        const userResponse = {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            joinDate: user._id.getTimestamp()
+        };
+        
+        res.json({ 
+            success: true, 
+            message: "Profile updated successfully",
+            user: userResponse
+        });
+        
+    } catch (error) {
+        console.log('updateUserProfile error:', error);
+        res.json({ success: false, message: error.message });
     }
 }
 
@@ -100,4 +219,4 @@ const adminLogin = async (req, res) => {
 }
 
 
-export { loginUser, registerUser, adminLogin }
+export { loginUser, registerUser, adminLogin, getUserProfile, updateUserProfile }

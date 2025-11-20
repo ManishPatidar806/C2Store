@@ -1,5 +1,5 @@
-ClothStore - Modern E-commerce Platform
-![ClothStore Logo](https://via.placeholder.com/200x80/4F46E5/FFFFFF?text=ClothStore)
+C2Store - Modern E-commerce Platform
+![C2Store Logo](https://via.placeholder.com/200x80/4F46E5/FFFFFF?text=C2Store)
 
 ![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=flat-square&logo=react)
 ![Node.js](https://img.shields.io/badge/Node.js-20+-339933?style=flat-square&logo=node.js)
@@ -9,7 +9,7 @@ ClothStore - Modern E-commerce Platform
 
 🚀 A comprehensive e-commerce platform featuring modern web technologies, secure payments, and intuitive management tools
 
-[Demo Video](#) • [Live Demo](#) • [Documentation](#api-documentation)
+[Demo Video](#) • [Live Demo](https://c2store.vercel.app/) • [Documentation](#api-documentation)
 
 ## 📚 Table of Contents
 - [Overview](#overview)
@@ -28,7 +28,7 @@ ClothStore - Modern E-commerce Platform
 
 ## Overview
 
-ClothStore is a modern, full-stack e-commerce platform designed to provide a seamless shopping experience for customers and efficient management tools for administrators. Built with the MERN stack, it combines cutting-edge web technologies with secure payment processing and comprehensive inventory management.
+C2Store is a modern, full-stack e-commerce platform designed to provide a seamless shopping experience for customers and efficient management tools for administrators. Built with the MERN stack, it combines cutting-edge web technologies with secure payment processing and comprehensive inventory management.
 
 🎯 **Mission**  
 To democratize online retail by providing accessible, feature-rich e-commerce solutions that scale with business needs.
@@ -115,7 +115,7 @@ To democratize online retail by providing accessible, feature-rich e-commerce so
 
 ## 📁 Project Structure
 ```
-ClothStore/
+C2Store/
 ├── Frontend/                    # React.js customer application
 │   ├── public/                 # Static assets
 │   ├── src/
@@ -199,8 +199,8 @@ ClothStore/
 ### 1-Minute Setup
 ```bash
 # Clone the repository
-git clone https://github.com/ManishPatidar806/ClothStore.git
-cd ClothStore
+git clone https://github.com/ManishPatidar806/C2Store.git
+cd C2Store
 
 # Quick setup with Docker (Coming Soon)
 # docker-compose up -d
@@ -226,7 +226,7 @@ npm install
 Create a `.env` file in the `Backnd/` directory:
 ```env
 # Database Configuration
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/clothstore
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/C2Store
 JWT_SECRET=your_super_secret_jwt_key_here
 
 # Cloudinary Configuration
@@ -273,7 +273,7 @@ npm install
 Create a `.env` file in the `Frontend/` directory:
 ```env
 VITE_BACKEND_URL=http://localhost:4000
-VITE_APP_NAME=ClothStore
+VITE_APP_NAME=C2Store
 ```
 
 4. **Start Development Server**
@@ -330,7 +330,7 @@ brew install mongodb-community
 sudo systemctl start mongod
 
 # Use local connection string
-MONGODB_URI=mongodb://localhost:27017/clothstore
+MONGODB_URI=mongodb://localhost:27017/C2Store
 ```
 
 ## 🌐 Environment Configuration
@@ -338,7 +338,7 @@ MONGODB_URI=mongodb://localhost:27017/clothstore
 ### Backend Environment Variables
 ```env
 # Database Configuration
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/clothstore
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/C2Store
 JWT_SECRET=your_jwt_secret_minimum_32_characters
 
 # Cloudinary Configuration (Image Storage)
@@ -354,21 +354,21 @@ PORT=4000
 NODE_ENV=development
 
 # Admin Configuration
-ADMIN_EMAIL=admin@clothstore.com
+ADMIN_EMAIL=admin@C2Store.com
 ADMIN_PASSWORD=secureAdminPassword123
 ```
 
 ### Frontend Environment Variables
 ```env
 VITE_BACKEND_URL=http://localhost:4000
-VITE_APP_NAME=ClothStore
+VITE_APP_NAME=C2Store
 VITE_STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_publishable_key
 ```
 
 ### Admin Environment Variables
 ```env
 VITE_BACKEND_URL=http://localhost:4000
-VITE_APP_NAME=ClothStore Admin
+VITE_APP_NAME=C2Store Admin
 ```
 
 ## 📖 API Documentation
@@ -624,10 +624,10 @@ This project is licensed under the ISC License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Links
 
-- **GitHub Repository**: [ClothStore](https://github.com/ManishPatidar806/ClothStore)
+- **GitHub Repository**: [C2Store](https://github.com/ManishPatidar806/C2Store)
 - **Live Demo**: [Coming Soon](#)
 - **Documentation**: [API Docs](#api-documentation)
-- **Report Issues**: [GitHub Issues](https://github.com/ManishPatidar806/ClothStore/issues)
+- **Report Issues**: [GitHub Issues](https://github.com/ManishPatidar806/C2Store/issues)
 
 ---
 

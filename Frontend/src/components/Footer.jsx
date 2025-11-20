@@ -80,14 +80,13 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <Link to="/" className="inline-block mb-6">
-              <img 
-                src={assets.logo} 
-                className="h-10 w-auto brightness-0 invert" 
-                alt="ClothStore"
-              />
+              <span 
+                className=" text-pink-600 h-10 w-auto " 
+                
+              >C2Store</span>
             </Link>
             <p className="text-neutral-300 leading-relaxed mb-8 max-w-md">
-              Dreams Clothing brings you the latest in fashion with trendy, high-quality clothing for every occasion. 
+              C2Store brings you the latest in fashion with trendy, high-quality clothing for every occasion. 
               Discover stylish collections and express your unique style effortlessly.
             </p>
             
@@ -101,7 +100,7 @@ const Footer = () => {
                 </div>
                 <div>
                   <p className="text-sm text-neutral-400">Phone</p>
-                  <p className="text-neutral-200">+91 96246 34498</p>
+                  <p className="text-neutral-200">+91 XXXXX XXXXX</p>
                 </div>
               </div>
               
@@ -113,7 +112,7 @@ const Footer = () => {
                 </div>
                 <div>
                   <p className="text-sm text-neutral-400">Email</p>
-                  <p className="text-neutral-200">contact@dreamsclothing.com</p>
+                  <p className="text-neutral-200">contact@c2store.com</p>
                 </div>
               </div>
             </div>
@@ -172,7 +171,7 @@ const Footer = () => {
             </div>
             
             <div className="text-neutral-400 text-sm">
-              © {currentYear} Dreams Clothing. All rights reserved.
+              © {currentYear} C2Store. All rights reserved.
             </div>
           </div>
         </div>

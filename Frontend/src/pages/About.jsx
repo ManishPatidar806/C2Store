@@ -30,7 +30,7 @@ const About = () => {
             <div className="space-y-4">
               <h2 className="text-3xl font-bold text-neutral-900">Our Story</h2>
               <p className="text-lg text-neutral-600 leading-relaxed">
-                ClothStore was born out of a passion for fashion and a desire to revolutionize the way people shop for clothing online. Our journey began with a simple idea: to provide a platform where customers can easily discover, explore, and purchase high-quality fashion from the comfort of their homes.
+                C2Store was born out of a passion for fashion and a desire to revolutionize the way people shop for clothing online. Our journey began with a simple idea: to provide a platform where customers can easily discover, explore, and purchase high-quality fashion from the comfort of their homes.
               </p>
               <p className="text-lg text-neutral-600 leading-relaxed">
                 Since our inception, we've worked tirelessly to curate a diverse selection of premium clothing that caters to every style and preference. From contemporary fashion to timeless classics, we offer an extensive collection sourced from trusted brands and emerging designers.

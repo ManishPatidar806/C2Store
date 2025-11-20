@@ -7,13 +7,8 @@ const Navbar = () => {
   const [visible, setVisible] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const {
-    getCartCount,
-    navigate,
-    token,
-    setToken,
-    setCartItems,
-  } = useContext(ShopContext);
+  const { getCartCount, navigate, token, setToken, setCartItems } =
+    useContext(ShopContext);
 
   // Handle scroll effect for navbar
   useEffect(() => {
@@ -52,11 +47,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between py-4 lg:py-6">
           {/* Logo */}
           <Link to="/" className="hover-lift">
-            <img
-              src={assets.logo}
-              className="h-8 md:h-10 w-auto"
-              alt="ClothStore"
-            />
+            <span className="h-8 md:h-10 w-auto text-pink-600">C2Store</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -114,7 +105,7 @@ const Navbar = () => {
               {token && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-medium border border-neutral-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                   <div className="py-2">
-                    <button 
+                    <button
                       onClick={() => navigate("/profile")}
                       className="w-full text-left px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-primary-600 transition-colors duration-200"
                     >

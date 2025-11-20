@@ -52,7 +52,7 @@ const Sidebar = () => {
             </svg>
           </div>
           <div>
-            <h1 className="text-xl font-bold text-neutral-900 font-display">Dreams</h1>
+            <h1 className="text-xl font-bold text-neutral-900 font-display">C2Store</h1>
             <p className="text-sm text-neutral-500">Admin Panel</p>
           </div>
         </div>

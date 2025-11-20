@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 const Login = () => {
   const [currentState, setCurrentState] = useState('Login')
   const [isLoading, setIsLoading] = useState(false)
-  const { token, setToken, navigate, backendUrl } = useContext(ShopContext)
+  const { token, setToken, navigate, backendUrl, setUser } = useContext(ShopContext)
 
   const [formData, setFormData] = useState({
     name: '',
@@ -81,16 +81,24 @@ const Login = () => {
         setToken(response.data.token)
         localStorage.setItem('token', response.data.token)
         
-        // Store user info for profile page
-        if (currentState === 'Sign Up') {
-          localStorage.setItem('userName', formData.name)
-          localStorage.setItem('userEmail', formData.email)
+        // Store user data if provided by API
+        if (response.data.user) {
+          setUser(response.data.user)
+          localStorage.setItem('userData', JSON.stringify(response.data.user))
+          localStorage.setItem('userName', response.data.user.name)
+          localStorage.setItem('userEmail', response.data.user.email)
         } else {
-          // For login, we'll decode token or use email from form
-          localStorage.setItem('userEmail', formData.email)
-          // If user name is not available, we'll use email prefix
-          if (!localStorage.getItem('userName')) {
-            localStorage.setItem('userName', formData.email.split('@')[0])
+          // Fallback: Store user info for profile page
+          if (currentState === 'Sign Up') {
+            localStorage.setItem('userName', formData.name)
+            localStorage.setItem('userEmail', formData.email)
+          } else {
+            // For login, use email from form
+            localStorage.setItem('userEmail', formData.email)
+            // If user name is not available, use email prefix
+            if (!localStorage.getItem('userName')) {
+              localStorage.setItem('userName', formData.email.split('@')[0])
+            }
           }
         }
         
